@@ -31,7 +31,7 @@ export const profile: Profile = {
     },
   ],
   socials: [
-    { label: "GitHub", href: "https://github.com/your-account" },
+    { label: "GitHub", href: "https://github.com/polarbm1500" },
     { label: "X", href: "https://x.com/your-account" },
   ],
 };
