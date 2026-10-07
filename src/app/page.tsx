@@ -1,13 +1,13 @@
 import Container from "@/components/layout/Container";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
 
 /**
  * トップページ。
- * 残りの placeholder は Step 3 以降で Skills / Works / Contact に置き換える。
+ * 残りの placeholder は Step 4 以降で Works / Contact に置き換える。
  */
 const placeholders = [
-  { id: "skills", label: "Skills", note: "Step 3 で実装" },
   { id: "works", label: "Works", note: "Step 4 で実装" },
   { id: "contact", label: "Contact", note: "Step 6 で実装" },
 ];
@@ -17,6 +17,7 @@ export default function Home() {
     <>
       <Hero />
       <About />
+      <Skills />
 
       {placeholders.map((section) => (
         <section key={section.id} id={section.id} className="border-t border-line py-20">
