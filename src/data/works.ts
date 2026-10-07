@@ -52,7 +52,7 @@ export const works: Work[] = [
       "作品データを型付きの配列に分離し、配列に1件追加するだけで一覧と詳細ページに反映される構成にした",
       "全ページを静的生成し、表示速度を確保した",
     ],
-    github: "https://github.com/your-account/portfolio",
+    github: "https://github.com/polarbm1500/portfolio",
   },
 ];
 
