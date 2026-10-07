@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ポートフォリオサイト
 
-## Getting Started
+AIエンジニアとしてのスキルと制作実績をまとめたポートフォリオサイトです。
+要件定義書を書くところから始め、設計・実装・デプロイまでを一通り行いました。
 
-First, run the development server:
+- 公開URL: （Vercel にデプロイ後に追記）
+- 要件定義書: [docs/requirements.md](docs/requirements.md)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 主な機能
+
+| 機能 | 内容 |
+|---|---|
+| プロフィール | 自己紹介・経歴・AIエンジニアとしての目標 |
+| スキル | デザイン・コーディング / フロントエンド / バックエンド / その他 の4区分 |
+| 制作実績 | 作品の一覧と詳細ページ（概要・使用技術・工夫した点・GitHub / デモへのリンク） |
+| お問い合わせ | フォームから送信すると、Resend 経由でメールが届く |
+| レスポンシブ | PC・スマートフォンの両方に対応 |
+
+## 使用技術
+
+- Next.js 16（App Router）/ React 19 / TypeScript
+- Tailwind CSS v4
+- zod（お問い合わせの入力チェック）
+- Resend（メール送信）
+- Vercel（ホスティング）
+
+## 工夫した点
+
+- **作品データの分離**: 作品は `src/data/works.ts` の型付き配列で管理しています。1件足すだけで、一覧・詳細ページ・sitemap のすべてに反映されます。
+- **全ページの静的生成**: データベースを使わず、作品の詳細ページもビルド時に生成しています。
+- **表示速度**: 日本語の Web フォントをやめて端末のフォントを使うことで、モバイルでの表示を速くしました（Lighthouse モバイルで LCP 3.7〜6.0秒 → 2.6〜2.8秒）。
+- **フォームの安全対策**: 入力チェックはブラウザとサーバーの両方で同じルール（zod）を使います。ほかに、テキストメールでの送信、件名への改行の禁止、ボット対策（ハニーポット）を入れています。
+
+## ディレクトリ構成
+
+```
+src/
+├── app/                # ページ・API・OGP画像・sitemap など
+│   ├── api/contact/    # お問い合わせの送信 API
+│   └── works/[slug]/   # 作品詳細ページ
+├── components/
+│   ├── layout/         # ヘッダー・フッター・モバイルメニュー
+│   ├── sections/       # トップページの各セクション
+│   ├── ui/             # 共通の見出し
+│   └── works/          # 作品カード・サムネイル
+├── data/               # プロフィール・スキル・作品のデータ
+├── lib/                # お問い合わせの入力ルール
+└── types/              # 型定義
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ローカルで動かす
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+cp .env.example .env.local   # お問い合わせフォームを使う場合は値を入れる
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+http://localhost:3000 で開けます。
 
-## Learn More
+### 環境変数
 
-To learn more about Next.js, take a look at the following resources:
+| 名前 | 内容 |
+|---|---|
+| `RESEND_API_KEY` | Resend の API キー |
+| `CONTACT_TO_EMAIL` | お問い合わせの受信先（独自ドメイン未設定の間は Resend に登録したアドレス） |
+| `NEXT_PUBLIC_SITE_URL` | 任意。独自ドメインを使う場合のサイトURL（Vercel 上では自動で設定される） |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### コマンド
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| コマンド | 内容 |
+|---|---|
+| `npm run dev` | 開発サーバーを起動 |
+| `npm run build` | 本番用にビルド |
+| `npm start` | ビルドしたものを起動 |
+| `npm run lint` | ESLint でチェック |
