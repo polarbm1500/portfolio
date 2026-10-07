@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 参考デザイン画像（Adobe Stock）はライセンス上公開しないため管理対象外
+/docs/images/
