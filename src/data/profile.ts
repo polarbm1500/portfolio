@@ -2,7 +2,7 @@ import type { Profile } from "@/types";
 
 /**
  * TODO: 内容はすべて仮です。ご自身の情報に差し替えてください。
- * avatar は public/profile.jpg に画像を置くと表示されます。
+ * avatar は public/profile.jpg などに画像を置き、パスを差し替えてください。
  */
 export const profile: Profile = {
   name: "山田 太郎",
@@ -15,7 +15,7 @@ export const profile: Profile = {
     "大学でAI・機械学習を学びながら、学んだ技術を実際に動くアプリケーションとして形にすることに取り組んできました。",
     "モデルを作って終わりにせず、使う人の手元に届くところまで実装することを大切にしています。フロントエンドからバックエンド、デプロイまで一通り自分で組み上げます。",
   ],
-  avatar: "/profile.jpg",
+  avatar: "/profile-placeholder.svg",
   careers: [
     {
       period: "2024年4月 - 現在",
