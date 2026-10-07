@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Noto_Sans_JP } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { siteConfig } from "@/data/site";
 import "./globals.css";
 
 /**
- * 日本語フォントは全字形を含むと重いため preload せず、
- * 読み込みが終わるまではOS標準の日本語フォントで表示する（globals.css のフォールバック）。
- * 非機能要件「ページ読み込み 3 秒以内」への配慮。
+ * 日本語は Web フォントを読み込まず、端末に入っているフォントを使う（globals.css の --font-sans）。
+ * Noto Sans JP を読み込んでいた頃は約 20 個のフォントファイルが届くたびにページ全体が再レイアウトされ、
+ * モバイルの表示速度を落としていたため。非機能要件「ページ読み込み 3 秒以内」への対応。
+ *
+ * 等幅の英字ラベル用の Geist Mono は英字だけで軽いので Web フォントのまま使う。
  */
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-});
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -30,13 +25,27 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  // 画像は app/opengraph-image.tsx から自動で設定される
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: siteConfig.title,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <Header />

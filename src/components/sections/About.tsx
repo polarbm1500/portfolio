@@ -14,12 +14,12 @@ export default function About() {
         <SectionHeading index="01" label="About" title="自己紹介" />
 
         <div className="mt-12 grid gap-12 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-16">
-          <div className="relative aspect-[4/5] w-full max-w-xs overflow-hidden bg-line md:max-w-none">
+          <div className="relative aspect-[4/5] w-full max-w-60 overflow-hidden bg-line md:max-w-none">
             <Image
               src={profile.avatar}
               alt={`${profile.name}のプロフィール写真`}
               fill
-              sizes="(min-width: 1024px) 380px, (min-width: 768px) 40vw, 320px"
+              sizes="(min-width: 1024px) 380px, (min-width: 768px) 40vw, 240px"
               className="object-cover"
             />
           </div>

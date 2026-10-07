@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import MobileMenu from "./MobileMenu";
 import { navItems } from "@/data/site";
 import { profile } from "@/data/profile";
 
@@ -8,7 +9,7 @@ import { profile } from "@/data/profile";
  * ナビゲーションは /#about のような絶対パス付きアンカーなので、
  * 作品詳細ページからでもトップの該当セクションへ戻れる。
  *
- * モバイル用のメニューは Step 7 で追加する（現状は sm 未満で非表示）。
+ * sm 以上は横並びのリンク、sm 未満は MobileMenu（開閉式）に切り替える。
  */
 export default function Header() {
   return (
@@ -36,6 +37,8 @@ export default function Header() {
               ))}
             </ul>
           </nav>
+
+          <MobileMenu />
         </div>
       </Container>
     </header>
