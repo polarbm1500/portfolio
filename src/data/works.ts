@@ -6,6 +6,8 @@ import type { Work } from "@/types";
  * slug は URL になるので半角英数字とハイフンのみ、かつ重複しないようにしてください。
  *
  * TODO: 内容はすべて仮です。実際に作ったものに差し替えてください。
+ * サムネイルは public/works/ に画像を置き、thumbnail: "/works/xxx.png" を足すと表示されます
+ * （未指定の間は一覧カードにプレースホルダが出ます）。
  */
 export const works: Work[] = [
   {
@@ -23,7 +25,6 @@ export const works: Work[] = [
     ],
     github: "https://github.com/your-account/ai-chat-app",
     demo: "https://example.com",
-    thumbnail: "/works/ai-chat-app.png",
   },
   {
     slug: "image-classifier",
@@ -38,7 +39,6 @@ export const works: Work[] = [
       "推論結果を確信度つきで表示し、モデルが迷っている場合が分かるようにした",
     ],
     github: "https://github.com/your-account/image-classifier",
-    thumbnail: "/works/image-classifier.png",
   },
   {
     slug: "portfolio-site",
@@ -53,7 +53,6 @@ export const works: Work[] = [
       "全ページを静的生成し、表示速度を確保した",
     ],
     github: "https://github.com/your-account/portfolio",
-    thumbnail: "/works/portfolio-site.png",
   },
 ];
 
