@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import Container from "@/components/layout/Container";
 import WorkThumbnail from "@/components/works/WorkThumbnail";
+import { siteConfig } from "@/data/site";
 import { getWorkBySlug, works } from "@/data/works";
 
 /**
@@ -16,16 +17,36 @@ export function generateStaticParams() {
   return works.map((work) => ({ slug: work.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/works/[slug]">): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps<"/works/[slug]">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const { slug } = await params;
   const work = getWorkBySlug(slug);
   if (!work) return {};
 
+  // openGraph / twitter は親（layout）の値を丸ごと置き換えるので、必要な項目をすべて書く。
+  // 画像も消えてしまうため、親で設定された OGP 画像（app/opengraph-image.tsx）を引き継ぐ
+  const { openGraph, twitter } = await parent;
+
   return {
     title: work.title,
     description: work.summary,
+    openGraph: {
+      type: "article",
+      locale: "ja_JP",
+      siteName: siteConfig.title,
+      title: work.title,
+      description: work.summary,
+      url: `/works/${work.slug}`,
+      images: openGraph?.images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: work.title,
+      description: work.summary,
+      images: twitter?.images,
+    },
   };
 }
 

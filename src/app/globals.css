@@ -6,7 +6,12 @@
  * タイポグラフィ主体の構成。色数は絞り、装飾ではなく文字組みと余白で見せる。
  */
 @theme {
-  --font-sans: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Yu Gothic",
+  /*
+   * 端末の日本語フォント（Web フォントは使わない。理由は layout.tsx）。
+   * Mac・iPhone: ヒラギノ / Windows 10 以降: BIZ UDPゴシック（無ければメイリオ）/
+   * Android など: Noto Sans JP
+   */
+  --font-sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP",
     Meiryo, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
@@ -17,7 +22,7 @@
   /* 文字: 真っ黒を避けた温かみのある黒と、その減光段階 */
   --color-ink: #14110f;
   --color-ink-muted: #6f6a66;
-  --color-ink-subtle: #a39d97;
+  --color-ink-subtle: #75706a; /* 白・オフホワイトどちらの背景でもコントラスト比 4.5 以上 */
 
   /* 罫線 */
   --color-line: #e7e3de;
