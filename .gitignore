@@ -43,3 +43,6 @@ next-env.d.ts
 
 # 参考デザイン画像（Adobe Stock）はライセンス上公開しないため管理対象外
 /docs/images/
+
+# 要件定義書の Word 版はファイル情報に所属などが残るため公開しない（内容は docs/requirements.md と同じ）
+/docs/*.docx
