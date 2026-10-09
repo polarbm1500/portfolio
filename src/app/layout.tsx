@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  robots: siteConfig.indexable
+    ? undefined
+    : { index: false, follow: false },
   // 画像は app/opengraph-image.tsx から自動で設定される
   openGraph: {
     type: "website",

@@ -19,6 +19,11 @@ export const siteConfig = {
   description:
     "AIエンジニアとしてのスキルと制作実績をまとめたポートフォリオサイトです。開発したAIアプリ・Webアプリの概要、使用技術、工夫した点を掲載しています。",
   url: resolveSiteUrl(),
+  /**
+   * 検索エンジンに載せるか。src/data/ が仮データの間は false にして、全ページに noindex を付ける。
+   * TODO: 本人の情報に差し替えたら true に戻す
+   */
+  indexable: false,
 } as const;
 
 /** ヘッダーのナビゲーション。詳細ページからも戻れるよう先頭に / を付ける */
