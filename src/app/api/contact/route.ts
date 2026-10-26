@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { z } from "zod";
 import { contactSchema, type ContactResponse } from "@/lib/contact-schema";
+import { createRateLimiter, getClientIp } from "@/lib/rate-limit";
 
 /**
  * F-07 お問い合わせの送信先。フォームの内容を検証し、Resend で自分宛てにメールを送る。
@@ -12,6 +13,9 @@ import { contactSchema, type ContactResponse } from "@/lib/contact-schema";
  * 独自ドメインを検証していないので、送信元は Resend が用意している onboarding@resend.dev を使う。
  */
 const FROM = "Portfolio Contact <onboarding@resend.dev>";
+
+// 同じ相手からの送信は 10 分に 3 回まで（いたずらの連打で受信箱と Resend の無料枠を埋められないように）
+const rateLimit = createRateLimiter({ limit: 3, windowMs: 10 * 60 * 1000 });
 
 function json(body: ContactResponse, status: number) {
   return Response.json(body, { status });
@@ -42,6 +46,19 @@ export async function POST(request: Request) {
   // ハニーポットに値があればボット。相手に気付かれないよう、送らずに成功を返す
   if (website) {
     return json({ ok: true }, 200);
+  }
+
+  const limited = rateLimit(getClientIp(request));
+  if (!limited.ok) {
+    const res = json(
+      {
+        ok: false,
+        message: `短時間に送信が続いたため、受付を一時停止しています。${Math.ceil(limited.retryAfterSec / 60)}分ほどおいて再度お試しください。`,
+      },
+      429,
+    );
+    res.headers.set("Retry-After", String(limited.retryAfterSec));
+    return res;
   }
 
   const apiKey = process.env.RESEND_API_KEY;
